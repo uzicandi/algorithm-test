@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 페이지 교체 알고리즘 : 메모리를 관리하는 운영체제에서, 페이지 부재가 발생하여 새로운 페이지를 할당하기 위해
+      // 할당된 페이지 중 어느 것을 교체할지를 결정하는 방법.
+      // 여기서는 LRU(Least Resently Used) : 가장 오랫동안 사용되지 않은 자리를 제거
+      // 그 외로 FIFO : 선입선출이 있다.
+      let 동물 = [
+        '척추동물',
+        '어류',
+        '척추동물',
+        '무척추동물',
+        '파충류',
+        '척추동물',
+        '어류',
+        '파충류'
+      ];
+
+      /*
+      1회: ['척추동물'] #false 1분
+      2회: ['척추동물', '어류'] #false 1분
+      3회: ['척추동물(2)', '어류'] #true(hit) 1초 => hit데이터를 뒤로 미룸. ['어류', '척추동물(2)']
+      4회: ['어류', '척추동물', '무척추동물'] #false 1분
+      5회: ['척추동물', '무척추동물', '파충류'] #false 1분 => 자리가 다 차면 앞에가 빠지고 새로운게 뒤로 들어옴
+      6회: ['척추동물(2)', '무척추동물', '파충류'] #true(hit) 1초 => ['무척추동물', '파충류', '척추동물']
+      7회: ['파충류', '척추동물', '어류'] #false 1분 => 자리가 다 차면 앞에가 빠지고 새로운게 뒤로 들어옴
+      8회: ['파충류(2)', '척추동물', '어류']  #true(hit) 1초  => ['척추동물', '어류', '파충류']
+      */
+
+      function solution(동물, 자리) {
+        let 의자 = [];
+        let answer = 0;
+
+        for (var 개별동물 of 동물) {
+          if (의자.length < 3) {
+            if (의자.includes(개별동물)) {
+              // 페이지 hit시
+              // [1,2,3,4,5].includes(1) : true
+              // 의자.push(의자.shift()); // 자리가 hit되었을 때 항상 첫번째라는 보장은 없음.
+              // shift는 0번째부터 뽑아옴.
+
+              // array에서 hit에 위치하는 곳만 제거 하자! => splice
+              의자.splice(의자.indexOf(개별동물), 1);
+              의자.push(개별동물);
+              answer += 1;
+            } else {
+              의자.push(개별동물);
+              answer += 60;
+            }
+          } else {
+            // 자리가 꽉차있을 경우
+            if (의자.includes(개별동물)) {
+              // 페이지 hit시
+              // [1,2,3,4,5].includes(1) : true
+              //의자.push(의자.shift());
+
+              의자.splice(의자.indexOf(개별동물), 1);
+              의자.push(개별동물);
+              answer += 1;
+            } else {
+              의자.shift();
+              의자.push(개별동물);
+              answer += 60;
+            }
+          }
+          console.log(의자);
+        }
+        return `${parseInt(answer / 60)}분 ${parseInt(answer % 60)}초`;
+      }
+      console.log(solution(동물, 3));
+    </script>
+  </body>
+</html>
