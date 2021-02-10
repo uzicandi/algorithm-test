@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let 대기인원 = 14000605;
+      /*
+        9시         25 25
+        9시 10분    15  40
+        9시 20분    15  55
+        9시 30분    15  70
+        9시 40분    15  85
+        9시 50분    15  100
+
+        100명씩 12시간 : 1200명
+        */
+
+      let 일년일수2 = 0;
+      for (var i = 1; i < 11; i++) {
+        // 10월까지,
+        일년일수2 += 2 ** i;
+      }
+      년 = parseInt(대기인원 / 1200 / 일년일수2, 10);
+      console.log(`일년일수: ${일년일수2}`); // 2046
+      console.log(`걸린연도: ${대기인원 / 1200 / 일년일수2}`); // 5.7
+
+      let 걸린월수 = 0;
+      let 나머지일수 = (대기인원 / 1200) % 일년일수2;
+      console.log(`걸린연도를 뺀 나머지 일수(계산 전) : ${나머지일수}`); // 1437일 (2월 100일쯤 남았을 때)
+
+      for (var i = 10; i > 0; i--) {
+        걸린월수++;
+        if (나머지일수 < 2 ** i) {
+          break;
+        }
+        나머지일수 = 나머지일수 - 2 ** i; // 2**10만 가능
+      }
+      console.log(
+        `걸린연도, 걸린 월수를 뺀 나머지 일수(계산 후) : ${나머지일수}` // 413
+      );
+      console.log(`걸린월수: ${걸린월수 - 1}`); // for문은 2번돌았지만 사실 나머지 일수가 적용된건 1번이므로
+
+      // 하루에 1200명씩 태울 수 있는데, 나머지 인원에 언제 탑승하는지만 구하면 됨
+      console.log(`시간: ${대기인원 % 1200}`); //205 = 9시에 탑승이 100명, 10시에 탑승이 100명이므로 11시에 출발한다는 의미.
+      console.log(`시간: ${(대기인원 % 1200) / 100 + 9}`); //몇시에 출발하는지 알기
+
+      let 출발분 = [25, 40, 55, 70, 85, 100];
+      let 최종계산된분 = 0;
+      for (let key in 출발분) {
+        // 출발분의 인덱스만 순회
+        if (출발분[key] > (대기인원 % 1200) % 100) {
+          // 해당 분에 속하게됨
+          최종계산된분 = key * 10;
+          break;
+        }
+      }
+      console.log(`최종계산된분: ${최종계산된분}`); // 0 = 정시출발
+
+      let date = new Date();
+      console.log(date);
+      console.log(date.getFullYear());
+      console.log(date.getDay()); // 수요일이면 3
+      console.log(date.getHours());
+      console.log(date.getMinutes());
+      console.log(date.getSeconds());
+
+      // 문제점 = 60분이 넘었을 때.
+      if (최종계산된분 + date.getMinutes() > 60) {
+        최종계산된분 += date.getMinutes() - 60;
+        // 시간에도 +1 해야합니다.
+      }
+
+      console.log(`최종계산된분: ${최종계산된분 + date.getMinutes()}`);
+
+      function 배를건너는시간(대기인원) {
+        let 년 = 0,
+          월 = 0,
+          일 = 0,
+          시 = 0,
+          분 = 0;
+
+        let 걸린일수 = 대기인원 / 1200;
+        let 일년일수 = 0;
+        for (var i = 1; i < 11; i++) {
+          // 10월까지,
+          일년일수 += 2 ** i;
+        }
+
+        년 = parseInt(대기인원 / 1200 / 일년일수, 10);
+
+        let 걸린월수 = 0;
+        let 나머지일수 = (대기인원 / 1200) % 일년일수2;
+        for (var i = 10; i > 0; i--) {
+          걸린월수++;
+          if (나머지일수 < 2 ** i) {
+            break;
+          }
+          나머지일수 = 나머지일수 - 2 ** i; // 2**10만 가능
+        }
+        일 = parseInt(나머지일수, 10);
+        월 = parseInt(걸린월수 - 1, 10);
+
+        시 = parseInt((대기인원 % 1200) / 100 + 9, 10);
+
+        let 출발분 = [25, 40, 55, 70, 85, 100];
+        let 최종계산된분 = 0;
+        for (let key in 출발분) {
+          if (출발분[key] > (대기인원 % 1200) % 100) {
+            최종계산된분 = key * 10;
+            break;
+          }
+        }
+
+        let date = new Date();
+        최종계산된분 = 최종계산된분 + date.getMinutes();
+        if (최종계산된분 > 60) {
+          최종계산된분 = 최종계산된분 - 60;
+          시 += 1;
+        }
+        분 = 최종계산된분;
+
+        return `
+            ${년}년
+            ${월}월
+            ${일}일
+            ${시}시
+            ${분}분
+            `;
+      }
+      console.log(배를건너는시간(대기인원));
+    </script>
+  </body>
+</html>
