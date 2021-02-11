@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // ✅ 최솟값 최댓값 구할때 가장 많이 사용하는 방법.
+      let a = [6, 5, 4, 3, 2];
+      const reducerOne = (accumulator, currentvalue) =>
+        accumulator + currentvalue;
+      console.log(a.reduce(reducerOne)); // 20
+      const reducerTwo = (accumulator, currentvalue) =>
+        accumulator - currentvalue;
+      console.log(a.reduce(reducerTwo)); // -8 (순차적으로 앞에거에서 뒤에꺼 뺀다음 진행)
+      const reducerThree = (accumulator, currentvalue) =>
+        accumulator > currentvalue ? accumulator : currentvalue;
+      console.log(a.reduce(reducerThree)); // 6 (✨최댓값)
+      const reducerFour = (accumulator, currentvalue) =>
+        accumulator < currentvalue ? accumulator : currentvalue;
+      console.log(a.reduce(reducerFour)); // 2 (✨최솟값)
+    </script>
+  </body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 재귀함수 : 내가 나를 호출하는 함수
+      // 반복문 <-> 재귀함수
+
+      // 더하기
+
+      let s = 0;
+      for (let i = 0; i < 101; i++) {
+        s += i;
+      }
+      console.log(s);
+      // O(n)
+
+      let n = 100;
+      console.log((n * (n + 1)) / 2);
+      // O(1)
+
+      // 내가 풀려는 문제의 수학공식이 있는지 찾아보는게 효율상 크게 다름.
+
+      // 곱하기
+
+      let m = 1;
+      for (let i = 1; i < 6; i++) {
+        m *= i;
+      }
+      console.log(m);
+
+      // ✨ 재귀함수. 종렬조건. return 값이 자기자신을 호출하지 않는 순간이 꼭 필요함
+      // 없으면 무한반복이 됨.
+      // 위의 내용이 1부터 시작한다면 재귀는 100부터 시작
+      // 순번   f(n)     n       return      최종
+      // 1     f(100)   100      100+f(99)  100+99+98+...+1
+      // 2     f(99)    99      99+f(98)    99+98+...+1
+      // 3     f(98)    98      98+f(97)    98+97+...+1
+      // 4     f(97)    97      97+f(96)
+      // ...
+      // 2     f(2)   2      2+f(1)         2+1
+      // 1     f(1)   1      1
+      function f(n) {
+        if (n <= 1) {
+          return 1;
+        }
+        return n + f(n - 1);
+      }
+
+      console.log('재귀함수 더하기:', f(100));
+
+      function fm(m) {
+        if (m <= 1) {
+          return 1;
+        }
+        return m * fm(m - 1);
+      }
+
+      console.log('재귀함수 곱하기:', fm(5));
+    </script>
+  </body>
+</html>

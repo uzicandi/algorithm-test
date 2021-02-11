@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 최솟값과 최댓값
+
+      let a = [10, 20, 30, 1, 2, 3, 5, 9, 11];
+
+      // method 방법
+      a.sort(); // a 정렬 (근데 1, 11 이런 순으로 정렬됨)
+      // a = [1, 10, 11, 2, 20, 3, 30, 5, 9]
+      console.log(a[0]); // 최솟값
+      console.log(a[a.length - 1]); // 9
+
+      // ✨ Math 라이브러리 방법 - 가장많이 사용
+      // 다만 아주 큰 수에서는 에러가능성, 메모리 효율 안좋음
+      // Math에는 []를 넣지 못해서  max, min 바로 X
+      console.log(Math.max.apply(null, a)); // 최댓값
+      console.log(Math.min.apply(null, a)); // 최솟값
+
+      // 알고리즘으로 풀어내보기
+      // 최댓값
+      let m = 0;
+      for (let variable of a) {
+        if (variable > m) {
+          m = variable;
+        }
+      }
+      console.log(m);
+
+      // 최솟값
+      m = a[0];
+      for (variable of a) {
+        if (variable < m) {
+          m = variable;
+        }
+      }
+      console.log(m);
+    </script>
+  </body>
+</html>

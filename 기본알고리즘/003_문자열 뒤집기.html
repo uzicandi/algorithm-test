@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 문자열 역순
+      let result = '';
+      let x = 'leehojun';
+      while (true) {
+        if (x.length == 1) {
+          result += x;
+          break;
+        }
+        //result += String(x.pop()); // pop = (array)뒤에걸 꺼냄, slice = 앞에걸 꺼냄
+        let y = x.split('');
+        result += String(y.pop()); // pop = (array)뒤에걸 꺼냄, slice = 앞에걸 꺼냄
+        x = y.join('');
+      }
+
+      console.log(result);
+
+      // 문자열 정순
+
+      result = '';
+      x = 'leehojun';
+      while (true) {
+        if (x.length == 1) {
+          result = x + result;
+          break;
+        }
+        //result += String(x.pop()); // pop = (array)뒤에걸 꺼냄, slice = 앞에걸 꺼냄
+        y = x.split('');
+        result = String(y.pop()) + result; // pop = (array)뒤에걸 꺼냄, slice = 앞에걸 꺼냄
+        x = y.join('');
+      }
+
+      console.log(result);
+
+      // 재귀함수로 문자열 역순
+      function 문자열역순(문자) {
+        if (문자.length == 1) {
+          return 문자;
+        }
+        return (
+          // 문자열역순(문자.slice(0, 문자.length - 1)) + 문자[문자.length - 1] // 정순
+          문자[문자.length - 1] + 문자열역순(문자.slice(0, 문자.length - 1)) // 역순
+        );
+      }
+
+      console.log(문자열역순('leehojun'));
+    </script>
+  </body>
+</html>
