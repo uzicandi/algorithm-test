@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let sample = [];
+
+      let 첫번째밭 = [
+        [1, 0, 0, 0, 0],
+        [0, 0, 1, 0, 1],
+        [0, 0, 1, 0, 1],
+        [0, 0, 1, 0, 1],
+        [0, 0, 1, 0, 1]
+      ];
+
+      let 두번째밭 = [
+        [0, 0, 0, 0, 1],
+        [0, 0, 0, 0, 3],
+        [0, 0, 0, 0, 4],
+        [0, 2, 0, 0, 2],
+        [4, 5, 0, 2, 0]
+      ];
+
+      for (let i = 0; i < 첫번째밭.length; i++) {
+        sample[i] = new Array(첫번째밭[0].length);
+      }
+
+      // javascript matrix라고 검색하면 행렬연산을 할 수 있음. (파이썬은 해당 함수가 있음)
+      // 두번째 밭을 90도 회전해야함.
+
+      /*
+      index 두번째밭 기준으로 90도 회전하려면 
+      (0,4) -> (0,0)
+      (1,4) -> (0,1)
+      (2,4) -> (0,2)
+      (3,4) -> (0,3)
+      (4,4) -> (0,4)
+
+      (0,3) -> (1,0)
+      (1,3) -> (1,1)
+      (2,3) -> (1,2)
+      (3,3) -> (1,3)
+      (4,3) -> (1,4)
+
+      (0,2) -> (2,0)
+      (1,2) -> (2,1)
+      (2,2) -> (2,2)
+      (3,2) -> (2,3)
+      (4,2) -> (2,4)
+      */
+
+      // index는 length의 -1
+
+      for (let i = 0; i < 두번째밭.length; i++) {
+        for (let j = 0; j < 두번째밭[0].length; j++) {
+          sample[i][j] = 두번째밭[j][두번째밭[0].length - 1 - i];
+          sample[i][j] += 첫번째밭[i][j];
+        }
+      }
+      console.log(sample);
+
+      // sample을 숫자를 문자로 바꿔줌.
+
+      // 문제는 8진법을 썼음.
+      let result = '';
+      for (let v of sample) {
+        parseInt(v.join(''), 8); // 23420 이런식으로 합쳐줌, 8진법에서 10진법으로 바꿔주기
+
+        result += String.fromCharCode(parseInt(v.join(''), 8));
+      }
+
+      console.log(result); // 10000CAVE (만장굴ㅋ)
+    </script>
+  </body>
+</html>
