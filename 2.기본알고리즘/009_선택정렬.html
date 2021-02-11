@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 선택정렬
+      let a = [10, 11, 9, 2, 3, 6, 5, 4];
+      let 정렬된배열 = [];
+
+      for (let i = 0; i < 8; i++) {
+        정렬된배열.push(Math.min.apply(null, a));
+        // push, pop => 뒤에서 넣고 빼는 것
+        // shift, unshift => 앞에서 넣고 빼는 것
+        a.splice(a.indexOf(Math.min.apply(null, a)), 1);
+        console.log(a); // a가 다 빠짐.
+        console.log(정렬된배열);
+      }
+
+      // ✅ while를 통해서도 풀 수 있다
+      // a가 없어질 때 까지 돌리는 것
+      //   while(a) {
+
+      //   }
+    </script>
+  </body>
+</html>
