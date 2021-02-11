@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // Set 자료형 : 집합, 데이터 중복 X, 순서 X (비슷한 것으로 Map이 있다.)
+      let graph = {
+        100: new Set([67, 66]),
+        67: new Set([100, 82, 63]),
+        66: new Set([100, 73, 69]),
+        82: new Set([67, 61, 79]),
+        63: new Set([67]),
+        73: new Set([66]),
+        69: new Set([66, 65, 81]),
+        61: new Set([82]),
+        79: new Set([82, 87, 77]),
+        65: new Set([69, 84, 99]),
+        81: new Set([69]),
+        87: new Set([79, 31, 78]),
+        77: new Set([79]),
+        84: new Set([65]),
+        99: new Set([65]),
+        31: new Set([87]),
+        78: new Set([87])
+      };
+
+      // 깊이 우선 탐색? (DFS) : 현재 정점에서 한 방향으로 가면서 검사하기. "막힌 정점은 포기"하고 마지막에 따라온 간선으로 되돌아감.
+      //
+
+      function 깊이우선탐색(graph, start) {
+        // stack에 있는 Node들이 없어질 때 까지 진행.
+        let 방문 = [];
+        let stack = [start];
+
+        while (stack) {
+          let n = 0; // 다음 방문할 node.
+          n = stack.pop(); // 맨 마지막에 있는 요소를 꺼냄.
+          if (!방문.includes(n)) {
+            방문.push(n); // n을 방문하지 않았다면 방문하러 가자.
+            let 차집합 = new Set(
+              [...graph[n]].filter(x => !new Set(방문).has(x)) // 차집합에 대한 연산.
+            );
+            for (var v of 차집합) {
+              stack.push(v);
+            }
+            console.log(`방문: ${방문}`);
+            console.log(`Stack: ${stack}`);
+          }
+          if (stack.length == 0) {
+            break;
+          }
+        }
+        return 방문;
+      }
+      console.log(깊이우선탐색(graph, 100));
+
+      /*
+       ✨ Spread Syntax ❓
+       console.log(Math.max(1,2,3,4,5)); => 5
+       console.log(Math.max([1,2,3,4,5])); => NaN
+       그래서 이 배열을 전개시켜줄 필요가 있으므로
+       console.log(Math.max(...[1,2,3,4,5])); => 요렇게 사용
+        */
+
+      /*
+        ✨ filter ❓
+        let x = [1,2,3,4,5];
+        console.log(x.filter(value => value > 3)) // [4,5]
+        */
+
+      /*
+        ✨ Map ❓
+        let x = [1,2,3];
+        let y = ['abc', 'abcde', 'abcd']
+        console.log(x.map(value => value ** 2)) // [2, 4, 8]
+        */
+
+      function 깊이우선탐색최댓값(graph, start) {
+        // stack에 있는 Node들이 없어질 때 까지 진행.
+        let 방문 = [];
+        let stack = [start];
+
+        while (stack) {
+          let n = 0; // 다음 방문할 node.
+          n = stack.pop(); // 맨 마지막에 있는 요소를 꺼냄.
+          if (!방문.includes(n)) {
+            방문.push(n); // n을 방문하지 않았다면 방문하러 가자.
+            let 차집합 = new Set(
+              [...graph[n]].filter(x => !new Set(방문).has(x)) // 차집합에 대한 연산.
+            );
+            if ([...차집합].length == 0) {
+              // ...전개구문 안쓰고 length 구하려면 "차집합.size" 라고 해야함!
+              break;
+            }
+            stack.push(Math.max(...차집합)); // 가장 큰 값만 push
+            console.log(`방문: ${방문}`);
+            console.log(`Stack: ${stack}`);
+          }
+          if (stack.length == 0) {
+            break;
+          }
+        }
+        return 방문;
+      }
+
+      console.log(깊이우선탐색최댓값(graph, 100));
+
+      function 깊이우선탐색최솟값(graph, start) {
+        // stack에 있는 Node들이 없어질 때 까지 진행.
+        let 방문 = [];
+        let stack = [start];
+
+        while (stack) {
+          let n = 0; // 다음 방문할 node.
+          n = stack.pop(); // 맨 마지막에 있는 요소를 꺼냄.
+          if (!방문.includes(n)) {
+            방문.push(n); // n을 방문하지 않았다면 방문하러 가자.
+            let 차집합 = new Set(
+              [...graph[n]].filter(x => !new Set(방문).has(x)) // 차집합에 대한 연산.
+            );
+            if ([...차집합].length == 0) {
+              // ...전개구문 안쓰고 length 구하려면 "차집합.size" 라고 해야함!
+              break;
+            }
+            stack.push(Math.min(...차집합)); // 최솟값만 push
+            console.log(`방문: ${방문}`);
+            console.log(`Stack: ${stack}`);
+          }
+          if (stack.length == 0) {
+            break;
+          }
+        }
+        return 방문;
+      }
+
+      console.log(깊이우선탐색최솟값(graph, 100));
+
+      // 이제 최댓값, 최솟값 나온 것을 ASCII 코드로 바꾼다.
+
+      결과값_깊이우선탐색최댓값 = 깊이우선탐색최댓값(graph, 100);
+
+      let result = '';
+      for (var v of 결과값_깊이우선탐색최댓값) {
+        result += String.fromCharCode(v);
+      }
+      console.log('result', result); // dCROWN (d는 최초노드라서 큰 의미가 없음.)
+
+      결과값_깊이우선탐색최솟값 = 깊이우선탐색최솟값(graph, 100);
+
+      let result2 = '';
+      for (var v of 결과값_깊이우선탐색최솟값) {
+        result2 += String.fromCharCode(v);
+      }
+      console.log('result2', result2); // dBEAT
+    </script>
+  </body>
+</html>
