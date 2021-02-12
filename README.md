@@ -1,5 +1,7 @@
 ## 1. 코딩테스트문제!
 
+https://www.notion.so/a5a0fafe306e4cb78ec4476a272d156d?v=e116f6cdc6e34075bf8e4c0e56429a26
+
 #### `001_암호해독` <br>
 
 : parseInt, replace, 정규식표현, 인코딩, ascii코드, for in / for of, 이진법 / 십진법

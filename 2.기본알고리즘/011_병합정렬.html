@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 병합정렬 = (O(nlogn))으로 어떤 정렬보다 빠름 (Big O) - worst, best모두
+      // 삽입, 선택, 버블정렬은 2의 n제곱
+      // 분할, 정복이 있음.
+
+      let 입력값 = [5, 10, 66, 77, 54, 32, 11, 15];
+
+      // 2. 정복
+      // 작은 값이 앞으로 오게 함.
+
+      //   function 병합정렬(입력배열) {
+      //     let 입력배열의길이 = 입력배열.length;
+      //     if (입력배열의길이 <= 1) {
+      //       return 입력배열;
+      //     }
+      //     // 1. 분할
+      //     let 중간값 = parseInt(입력배열의길이 / 2);
+      //     let 그룹하나 = 병합정렬(입력배열.slice(0, 중간값));
+      //     let 그룹둘 = 병합정렬(입력배열.slice(중간값));
+      //     return `그룹하나: ${그룹하나}, 그룹둘: ${그룹둘}\n`;
+      //   }
+      //   console.log(병합정렬(입력값));
+
+      function 병합정렬(입력배열) {
+        let 입력배열의길이 = 입력배열.length;
+        let 결과값 = [];
+        if (입력배열의길이 <= 1) {
+          return 입력배열;
+        }
+        // 1. 분할
+        let 중간값 = parseInt(입력배열의길이 / 2);
+        let 그룹하나 = 병합정렬(입력배열.slice(0, 중간값));
+        let 그룹둘 = 병합정렬(입력배열.slice(중간값));
+
+        // 2. 정복
+        // 둘다 요소가 남아있을 때
+        while (그룹하나.length != 0 && 그룹둘.length != 0) {
+          if (그룹하나[0] < 그룹둘[0]) {
+            결과값.push(그룹하나.shift()); // 그룹하나에서 1개 빠져나와서 결과값에 push
+          } else {
+            결과값.push(그룹둘.shift());
+          }
+        }
+
+        // 요소가 그룹 한개에만 남아있을 때.
+        while (그룹하나.length != 0) {
+          결과값.push(그룹하나.shift()); // 그룹하나에서 1개 빠져나와서 결과값에 push
+        }
+        while (그룹둘.length != 0) {
+          결과값.push(그룹둘.shift()); // 그룹하나에서 1개 빠져나와서 결과값에 push
+        }
+        return 결과값;
+      }
+      console.log(병합정렬(입력값));
+    </script>
+  </body>
+</html>
