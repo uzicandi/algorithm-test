@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // sort(a,b => a-b)가 관건. ✨ Compare Function
+      //
+      let array = [1, 5, 2, 6, 3, 7];
+      let commands = [[2, 5, 3], [4, 4, 1], [1, 7, 3]];
+
+      let answer = [];
+
+      function solution(array, commands) {
+        for (let n = 0; n < commands.length; n++) {
+          let i = commands[n][0];
+          let j = commands[n][1];
+          let k = commands[n][2];
+
+          answer.push(array.slice(i - 1, j).sort((a, b) => a - b)[k - 1]);
+        }
+        return answer;
+      }
+
+      console.log(solution(array, commands));
+    </script>
+  </body>
+</html>

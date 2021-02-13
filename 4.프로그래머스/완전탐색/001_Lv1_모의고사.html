@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let answers = [3, 3, 3, 4, 5, 1, 1, 4, 5];
+      let answer = [];
+      let person1 = [1, 2, 3, 4, 5]; // 5 주기
+      let person2 = [2, 1, 2, 3, 2, 4, 2, 5]; // 8 주기
+      let person3 = [3, 3, 1, 1, 2, 2, 4, 4, 5, 5]; // 10 주기
+
+      function solution(answers) {
+        let maxScore = 0;
+        let peopleScore = [0, 0, 0]; // 수포자들의 점수
+
+        for (let i = 0; i < answers.length; i++) {
+          if (person1[i % 5] === answers[i]) peopleScore[0]++;
+          if (person2[i % 8] === answers[i]) peopleScore[1]++;
+          if (person3[i % 10] === answers[i]) peopleScore[2]++;
+        }
+
+        maxScore = Math.max(...peopleScore);
+        console.log('peopleScore', peopleScore);
+        console.log('maxScore', maxScore);
+
+        let answerPeople = [];
+        for (let i = 0; i < 3; i++) {
+          if (peopleScore[i] === maxScore) {
+            answerPeople.push(i + 1);
+          }
+        }
+        console.log('answerPeople', answerPeople);
+      }
+
+      console.log(solution(answers));
+    </script>
+  </body>
+</html>
